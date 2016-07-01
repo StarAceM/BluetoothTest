@@ -14,11 +14,14 @@ public class BluetoothBroadcastReceiver extends BroadcastReceiver {
     private static final String TAG_RECEIVER = "BluetoothBroadcast";
     private BluetoothDevice device;
     private BluetoothAdapter bluetoothAdapter;
+    private OnReceiveData deviceSetInterface;
+
 
     public BluetoothBroadcastReceiver(){}
 
-    public BluetoothBroadcastReceiver(BluetoothAdapter bluetoothAdapter){
+    public BluetoothBroadcastReceiver(BluetoothAdapter bluetoothAdapter, OnReceiveData deviceSetInterface){
         this.bluetoothAdapter = bluetoothAdapter;
+        this.deviceSetInterface = deviceSetInterface;
     }
 
     @Override
@@ -30,7 +33,8 @@ public class BluetoothBroadcastReceiver extends BroadcastReceiver {
             if (device.getName() != null) {
                 Log.d(TAG_RECEIVER, "Device Found Name " + device.getName());
                 if (device.getName().equals(MainActivity.DEVICE_NAME)) {
-                    //bluetoothAdapter.cancelDiscovery();
+                    deviceSetInterface.setDevice(device);
+                    bluetoothAdapter.cancelDiscovery();
                 }
             }
         } else if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)){
@@ -38,6 +42,10 @@ public class BluetoothBroadcastReceiver extends BroadcastReceiver {
         } else if (action.equals(BluetoothAdapter.ACTION_DISCOVERY_STARTED)){
             Log.d(TAG_RECEIVER, "Discovery Started");
         }
+    }
+
+    public interface OnReceiveData{
+        public void setDevice(BluetoothDevice device);
     }
 
 }
