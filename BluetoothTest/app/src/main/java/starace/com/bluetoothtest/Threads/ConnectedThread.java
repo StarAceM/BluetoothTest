@@ -38,6 +38,7 @@ public class ConnectedThread extends Thread {
     }
 
     public void run(){
+        Log.d(TAG_CONNECTED_THREAD,"Run has been called in the ConnectedThread");
         byte[] buffer = new byte[1024];
         int bytes;
         // Keep listening to the InputStream while connected

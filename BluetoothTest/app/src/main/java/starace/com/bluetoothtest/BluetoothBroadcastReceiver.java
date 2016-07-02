@@ -30,6 +30,7 @@ public class BluetoothBroadcastReceiver extends BroadcastReceiver {
         Log.d(TAG_RECEIVER, "Action = " + action);
         if (action.equals(BluetoothDevice.ACTION_FOUND)){
             device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+            Log.d(TAG_RECEIVER,"Found device " + device.getAddress());
             if (device.getName() != null) {
                 Log.d(TAG_RECEIVER, "Device Found Name " + device.getName());
                 if (device.getName().equals(MainActivity.DEVICE_NAME)) {

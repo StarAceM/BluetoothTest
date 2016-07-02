@@ -26,10 +26,11 @@ public class MainActivity extends AppCompatActivity implements BluetoothBroadcas
     private boolean isPaired;
     private IntentFilter deviceFilter;
     private BluetoothDevice device;
-    public static final String DEVICE_NAME = "NOGO F1";
+    public static final String DEVICE_NAME = "iPhone";
     private BluetoothBroadcastReceiver broadcastReceiver;
     private BluetoothService bluetoothService;
     private Button connectButton;
+    private Button acceptButton;
     private boolean readyToConnect;
 
     @Override
@@ -38,22 +39,35 @@ public class MainActivity extends AppCompatActivity implements BluetoothBroadcas
         setContentView(R.layout.activity_main);
 
         enableBluetoothAdapter();
+        setUpConnectButton();
         regBroadcastReceiver();
         checkForDevices();
-        setUpConnectButton();
+
 
 
     }
 
     private void setUpConnectButton(){
         connectButton = (Button) findViewById(R.id.connect_button);
-        connectButton.setVisibility(View.INVISIBLE);
+        acceptButton = (Button) findViewById(R.id.connect_button_accept);
         connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (readyToConnect) {
                     bluetoothService.connect(device);
+            }
+        });
 
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bluetoothService != null) {
+                    Log.d(TAG_MAIN, "BluetoothService is not Null");
+                    // Only if the state is STATE_NONE, do we know that we haven't started already
+                    if (bluetoothService.getState() == BluetoothService.STATE_NONE) {
+                        // Start the Bluetooth chat services
+                        Log.d(TAG_MAIN, "bluetoothService.start() has been called");
+                        bluetoothService.start();
+                    }
                 }
             }
         });
@@ -146,6 +160,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothBroadcas
     @Override
     public void setDevice(BluetoothDevice device) {
         this.device = device;
+
+
     }
 
     @Override
@@ -171,16 +187,17 @@ public class MainActivity extends AppCompatActivity implements BluetoothBroadcas
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (bluetoothService != null) {
-            // Only if the state is STATE_NONE, do we know that we haven't started already
-            if (bluetoothService.getState() == BluetoothService.STATE_NONE) {
-                // Start the Bluetooth chat services
-                bluetoothService.start();
-                readyToConnect = true;
-                connectButton.setVisibility(View.VISIBLE);
-            }
-        }
+        Log.d(TAG_MAIN, "OnResume has been called");
+//        if (bluetoothService != null) {
+//            Log.d(TAG_MAIN, "BluetoothService is not Null");
+//            // Only if the state is STATE_NONE, do we know that we haven't started already
+//            if (bluetoothService.getState() == BluetoothService.STATE_NONE) {
+//                // Start the Bluetooth chat services
+//                bluetoothService.start();
+//                readyToConnect = true;
+//                connectButton.setVisibility(View.VISIBLE);
+//            }
+//        }
     }
 
     @Override
@@ -190,6 +207,8 @@ public class MainActivity extends AppCompatActivity implements BluetoothBroadcas
 
         super.onDestroy();
     }
+
+
 
 
 }
