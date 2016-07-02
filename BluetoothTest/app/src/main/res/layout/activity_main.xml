@@ -9,8 +9,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="starace.com.bluetoothtest.MainActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/connect_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Connect"
+        android:layout_centerInParent="true"
+        android:background="@color/colorPrimaryDark"/>
+
+    <Button
+        android:id="@+id/connect_button_accept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accept"
+        android:layout_centerInParent="true"
+        android:background="@color/colorPrimaryDark"
+        android:layout_below="@+id/connect_button"
+        android:layout_marginTop="30dp"/>
+
 </RelativeLayout>
