@@ -24,7 +24,7 @@ public class BluetoothService {
     public static final String NAME_SECURE = "BluetoothChatSecure";
 
     public static final UUID UUID_SECURE =
-            UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
+            UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     public static final int STATE_NONE = 0;       // we're doing nothing
     public static final int STATE_LISTEN = 1;     // now listening for incoming connections
@@ -252,10 +252,11 @@ public class BluetoothService {
             Log.d(TAG_CONNECT_THREAD,"Run has been called in the ConnectThread");
             Log.d(TAG_CONNECT_THREAD,socket.getRemoteDevice().getName());
             try {
-                Log.d(TAG_CONNECT_THREAD,"socket.connect() has been called");
+                Log.d(TAG_CONNECT_THREAD, "socket.connect() has been called");
                 socket.connect();
             } catch (IOException eConnect){
                 try{
+                    Log.d(TAG_BT_SERVICE, "Socket Connected" + socket.isConnected());
                     socket.close();
                 } catch (IOException eClose){
                     Log.e(TAG_CONNECT_THREAD, "unable to close during ConnectThread run()", eClose);
