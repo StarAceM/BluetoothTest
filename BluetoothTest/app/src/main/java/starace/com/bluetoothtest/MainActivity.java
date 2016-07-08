@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothBroadcas
     private boolean isPaired;
     private IntentFilter deviceFilter;
     private BluetoothDevice device;
-    public static final String DEVICE_NAME = "iPhone";
+    public static final String DEVICE_NAME = "UE MINI BOOM";
     private BluetoothBroadcastReceiver broadcastReceiver;
     private BluetoothService bluetoothService;
     private Button connectButton;
